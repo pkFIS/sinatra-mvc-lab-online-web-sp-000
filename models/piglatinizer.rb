@@ -1,19 +1,19 @@
 class PigLatinizer
 
-  def piglatinize(text)
-    words = text.split(" ")
-    words.collect! do |word|
-      word_a = word.split("")
-      if !word_a[0].downcase.match?(/[aeoui]/)
-        until word_a[0].downcase.match?(/[aeiou]/)
-          word_a << word_a.shift
-        end
-        word_a.join << "ay"
-      else
-        word << "way"
-      end
+  def piglatinize str
+    alpha = ('a'..'z').to_a
+    vowels = %w[a e i o u]
+    consonants = alpha - vowels
+  
+    if vowels.include?(str[0])
+      str + 'ay'
+    elsif consonants.include?(str[0]) && consonants.include?(str[1])
+      str[2..-1] + str[0..1] + 'ay'
+    elsif consonants.include?(str[0])
+      str[1..-1] + str[0] + 'ay'
+    else
+      str # return unchanged
     end
-    words.join(" ")
   end
 
 end
